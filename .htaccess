@@ -1,0 +1,11 @@
+# .htaccess Apache web sunucusu tarafından kullanılan web alanı üzerinde çeşitli komutlar
+# vererek ayar değişimleri yapılmasına olanak sağlayan dosyadır.
+# URL-Rewrite ayarları tanımlanmıştır. Belirtilen alan web sunucusuna istekte bulunulduğunda direkt olarak
+# public dizini altında ki php dosyalarının yorumlanmasını amaçlamaktadır.
+# Bu ayarlar projenin MVC çatısını oluşturan Phalcon Framework'ün resmi sitesinden alınmıştır.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteRule  ^$ public/    [L]
+    RewriteRule  (.*) public/$1 [L]
+</IfModule>

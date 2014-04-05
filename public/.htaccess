@@ -1,0 +1,44 @@
+# .htaccess Apache web sunucusu tarafından kullanılan web alanı üzerinde çeşitli komutlar
+# vererek ayar değişimleri yapılmasına olanak sağlayan dosyadır.
+# Aşağıda sunucu üzerinde charset tanımlaması ve URL-Rewrite ayarları tanımlanmıştır.
+# Bu ayarlar projenin MVC çatısını oluşturan Phalcon Framework'ün resmi sitesinden alınmıştır.
+
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ /index.php?_url=/$1 [QSA,L]
+</IfModule>
+
+#############
+# TYPES FIX #
+#############
+AddType text/css .css
+AddType text/javascript .js
+
+
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+   FileETag None
+   <ifModule mod_headers.c>
+     Header unset ETag
+     Header set Cache-Control "public"
+     Header set Pragma "no-cache"
+     Header set Expires "Thu, 15 Apr 2010 20:00:00 GMT"
+   </ifModule>
+</FilesMatch>
+
+
+
+####################
+# GZIP COMPRESSION #
+####################
+SetOutputFilter DEFLATE
+AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml text/javascript application/x-javascript application/x-httpd-php application/xml application/xhtml+xml application/rss+xml
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
+Header append Vary User-Agent env=!dont-vary
