@@ -104,7 +104,7 @@ class Security extends Plugin
                 )
             );
             */
-
+            $dispatcher->setActionName('nonexistaction');
             header('location:/401');
         }
     }
