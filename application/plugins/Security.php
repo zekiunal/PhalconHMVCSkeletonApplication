@@ -17,7 +17,4 @@ class Security extends Plugin
         $this->_dependencyInjector = $dependencyInjector;
     }
 
-
-
-
-} 
+}
