@@ -1,4 +1,4 @@
-PhalconHMVCSkeletonApplication
+Phalcon HMVC Skeleton Application
 =======================
 
 Introduction
