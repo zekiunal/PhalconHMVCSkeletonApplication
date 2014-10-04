@@ -1,5 +1,4 @@
 <?php
-use \Phalcon\Events\Event;
 use \Phalcon\Mvc\User\Plugin;
 use \Phalcon\Mvc\Dispatcher;
 use \Phalcon\Acl;
@@ -16,5 +15,4 @@ class Security extends Plugin
     {
         $this->_dependencyInjector = $dependencyInjector;
     }
-
 }

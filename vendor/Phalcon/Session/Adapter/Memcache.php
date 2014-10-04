@@ -163,7 +163,7 @@ class Memcache extends Phalcon\Session\Adapter implements Phalcon\Session\Adapte
         if (is_null($session_id)) {
             $session_id = $this->getId();
         }
-
+        
         return $this->getMemcacheInstance()->delete($this->getSessionId($session_id));
     }
 

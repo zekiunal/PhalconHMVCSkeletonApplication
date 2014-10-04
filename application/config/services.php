@@ -24,7 +24,7 @@ $di->set(
 );
 
 $di->set('config', function() {
-    return new Ini("../application/config/".APPLICATION_ENV.".ini");
+    return new Ini("../application/config/ini/".APPLICATION_ENV.".ini");
 });
 
 $di->set(

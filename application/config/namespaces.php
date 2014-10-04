@@ -19,5 +19,3 @@ $loader->registerDirs(
 );
 
 $loader->register();
-
-require_once "functions.php";

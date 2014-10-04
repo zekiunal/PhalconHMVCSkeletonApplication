@@ -3,6 +3,7 @@ namespace Project\Phalcon\Mvc;
 
 use Mustache_Loader_FilesystemLoader;
 use Phalcon\DI\FactoryDefault;
+use Phalcon\DI;
 use Phalcon\Loader;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
@@ -80,11 +81,11 @@ class Module
             // Set the engine
             $view->registerEngines(
                 array(
-                    ".mustache" => function ($view, $di) {
+                    ".mustache" => function ($view, DI $di) {
                             /**
                              * Mustache loading
                              */
-                            require_once "../vendor/Mustache/AutoLoader.php";
+                            require_once "../vendor/Mustache/Autoloader.php";
                             \Mustache_Autoloader::register();
 
                             $partial_url = '../public/layouts/'.$di->get('config')->project->layout.'/partials';

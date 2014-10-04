@@ -29,3 +29,5 @@ try {
     echo " Line=", $e->getLine(), "\n";
     echo $e->getTraceAsString();
 }
+
+echo "<!-- ".getenv('APPLICATION_ENV')." -->";
