@@ -1,14 +1,15 @@
 <?php
 namespace Project\Phalcon\Plugins;
 
-use \Phalcon\Acl\Adapter\Memory;
+use Phalcon\Acl\Adapter\Memory;
+use Phalcon\Acl\AdapterInterface;
 use Phalcon\Http\Response;
-use \Phalcon\Mvc\User\Plugin;
-use \Phalcon\Mvc\Dispatcher;
-use \Phalcon\Events\Event;
-use \Phalcon\Acl\Resource;
-use \Phalcon\Acl\Role;
-use \Phalcon\Acl;
+use Phalcon\Mvc\User\Plugin;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Events\Event;
+use Phalcon\Acl\Resource;
+use Phalcon\Acl\Role;
+use Phalcon\Acl;
 
 /**
  * @author      Zeki Unal <zekiunal@gmail.com>
@@ -42,44 +43,113 @@ class Security extends Plugin
     public function __construct($di)
     {
         $this->_dependencyInjector = $di;
+    }
+
+    /**
+     * @param AdapterInterface $acl
+     */
+    protected function registerRoles(AdapterInterface $acl)
+    {
+        /**
+         * Register roles
+         */
         $this->roles = array(
             'users'  => new Role('Users'),
             'guests' => new Role('Guests')
+        );
+
+        array_map(
+            function ($role) use ($acl) {
+                $acl->addRole($role);
+            },
+            $this->roles
+        );
+    }
+
+    /**
+     * @param AdapterInterface $acl
+     */
+    protected function registerPrivateResources(AdapterInterface $acl)
+    {
+        array_walk(
+            $this->private_resources,
+            function($actions, $resource) use ($acl) {
+                $acl->addResource(new Resource($resource), $actions);
+            }
+        );
+    }
+
+    /**
+     * @param AdapterInterface $acl
+     */
+    protected function registerPublicResources(AdapterInterface $acl)
+    {
+        array_walk(
+            $this->public_resources,
+            function($actions, $resource) use ($acl) {
+                $acl->addResource(new Resource($resource), $actions);
+            }
+        );
+    }
+
+    /**
+     * Grant access to private area to role Users
+     *
+     * @param AdapterInterface $acl
+     */
+    protected function grandAccessForPrivateResourceToUserRole(AdapterInterface $acl)
+    {
+        array_walk(
+            $this->private_resources,
+            function($actions, $resource) use ($acl) {
+                array_map(
+                    function ($action) use ($acl, $resource) {
+                        $acl->allow('Users', $resource, $action);
+                    },
+                    $actions
+                );
+            }
+        );
+    }
+
+    /**
+     * Grant access to public areas to both users and guests
+     *
+     * @param AdapterInterface $acl
+     */
+    protected function grandAccessForPublicResourceToAllUsers(AdapterInterface $acl)
+    {
+        array_map(
+            function (Role $role) use ($acl, $this) {
+                array_walk(
+                    $this->public_resources,
+                    function($actions, $resource) use ($acl, $role) {
+                        $acl->allow($role->getName(), $resource, $actions);
+                    }
+                );
+            },
+            $this->roles
         );
     }
 
     public function getAcl()
     {
         /**
-         * @todo sil
+         * @todo remove
          */
         $this->persistent->destroy();
+
         if (!isset($this->persistent->acl)) {
             $acl = new Memory();
             $acl->setDefaultAction(Acl::DENY);
-            foreach ($this->roles as $role) {
-                $acl->addRole($role);
-            }
 
-            foreach ($this->private_resources as $resource => $actions) {
-                $acl->addResource(new Resource($resource), $actions);
-            }
-            //Grant access to private area to role Users
-            foreach ($this->private_resources as $resource => $actions) {
-                foreach ($actions as $action) {
-                    $acl->allow('Users', $resource, $action);
-                }
-            }
+            $this->registerRoles($acl);
 
-            foreach ($this->public_resources as $resource => $actions) {
-                $acl->addResource(new Resource($resource), $actions);
-            }
-            //Grant access to public areas to both users and guests
-            foreach ($this->roles as $role) {
-                foreach ($this->public_resources as $resource => $actions) {
-                    $acl->allow($role->getName(), $resource, $actions);
-                }
-            }
+            $this->registerPrivateResources($acl);
+            $this->grandAccessForPrivateResourceToUserRole($acl);
+
+            $this->registerPublicResources($acl);
+            $this->grandAccessForPublicResourceToAllUsers($acl);
 
             //The acl is stored in session, APC would be useful here too
             $this->persistent->acl = $acl;
