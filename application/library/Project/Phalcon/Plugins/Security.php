@@ -155,9 +155,10 @@ class Security extends Plugin
      */
     protected function getActiveRole()
     {
-        $role = 'Guests';
         if ($this->session->get('auth')) {
-            return 'Users';
+            $role = 'Users';
+        } else {
+            $role = 'Guests';
         }
         return $role;
     }
