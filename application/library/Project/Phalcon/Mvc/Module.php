@@ -40,6 +40,11 @@ class Module
     protected $template;
 
     /**
+     * @var string;
+     */
+    protected $layout_dir;
+
+    /**
      * @var array;
      */
     protected $namespace;
@@ -48,6 +53,7 @@ class Module
     {
         $this->namespace = array();
         $this->template = 'welcome';
+
     }
 
     public function registerAutoloaders()
@@ -76,15 +82,20 @@ class Module
         $this->registerViewService($di);
     }
 
+    /**
+     * @param \Phalcon\DI\FactoryDefault     $di
+     */
     protected function registerViewService($di)
     {
         /**
          * Setting up the view component
          */
         $di['view'] = function () use ($di) {
+            $this->layout_dir = '../../../../public/layouts/' . $di->get('config')->project->layout . '/';
+
             $view = new View();
             $view->setViewsDir($this->path . $this->view_dir);
-            $view->setLayoutsDir('../../../../public/layouts/' . $di->get('config')->project->layout . '/');
+            $view->setLayoutsDir($this->layout_dir);
             $view->setTemplateAfter($this->template);
             $view->setVar('project-setting', $di->get('config')->project->toArray());
             // Set the engine
@@ -127,10 +138,6 @@ class Module
     }
 
     /**
-     * Normally, the framework creates the Dispatcher automatically. In our case, we want to perform a verification
-     * before executing the required action, checking if the user has access to it or not. To achieve this,
-     * we have replaced the component by creating a function in the bootstrap
-     *
      * @param \Phalcon\DI\FactoryDefault     $di
      * @return Dispatcher
      */
@@ -150,6 +157,9 @@ class Module
     }
 
     /**
+     * Normally, the framework creates the Dispatcher automatically. In our case, we want to perform a verification
+     * before executing the required action, checking if the user has access to it or not. To achieve this,
+     * we have replaced the component by creating a function in the bootstrap
      * @param \Phalcon\DI\FactoryDefault     $di
      * @param null                           $security
      */
