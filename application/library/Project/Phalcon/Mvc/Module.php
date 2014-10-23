@@ -165,23 +165,20 @@ class Module
                 $dispatcher = new Dispatcher();
                 $dispatcher->setDefaultNamespace($this->default_namespace);
 
-                if ($security != null) {
+                /**
+                 * Obtain the standard eventsManager from the DI
+                 */
+                $eventsManager = $di->getShared('eventsManager');
 
-                    /**
-                     * Obtain the standard eventsManager from the DI
-                     */
-                    $eventsManager = $di->getShared('eventsManager');
+                /**
+                 * Listen for events produced in the dispatcher using the Security plugin
+                 */
+                $eventsManager->attach('dispatch', $security);
 
-                    /**
-                     * Listen for events produced in the dispatcher using the Security plugin
-                     */
-                    $eventsManager->attach('dispatch', $security);
-
-                    /**
-                     * Bind the EventsManager to the Dispatcher
-                     */
-                    $dispatcher->setEventsManager($eventsManager);
-                }
+                /**
+                 * Bind the EventsManager to the Dispatcher
+                 */
+                $dispatcher->setEventsManager($eventsManager);
 
                 return $dispatcher;
             }
