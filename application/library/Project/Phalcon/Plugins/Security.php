@@ -70,9 +70,10 @@ class Security extends Plugin
      */
     protected function registerPrivateResources(AdapterInterface $acl)
     {
-        $add_resource = function($actions, $resource) use ($acl) {
+        $add_resource = function ($actions, $resource) use ($acl) {
             $acl->addResource(new Resource($resource), $actions);
         };
+
         array_walk($this->private_resources, $add_resource);
     }
 
@@ -81,7 +82,7 @@ class Security extends Plugin
      */
     protected function registerPublicResources(AdapterInterface $acl)
     {
-        $add_resource = function($actions, $resource) use ($acl) {
+        $add_resource = function ($actions, $resource) use ($acl) {
             $acl->addResource(new Resource($resource), $actions);
         };
         array_walk(
@@ -97,7 +98,7 @@ class Security extends Plugin
      */
     protected function grandAccessForPrivateResourceToUserRole(AdapterInterface $acl)
     {
-        $grant = function($actions, $resource) use ($acl) {
+        $grant = function ($actions, $resource) use ($acl) {
             $allow = function ($action) use ($acl, $resource) {
                 $acl->allow('Users', $resource, $action);
             };
@@ -121,7 +122,7 @@ class Security extends Plugin
     protected function grandAccessForPublicResourceToAllUsers(AdapterInterface $acl)
     {
         $grant = function (Role $role) use ($acl, $this) {
-            $allow = function($actions, $resource) use ($acl, $role) {
+            $allow = function ($actions, $resource) use ($acl, $role) {
                 $acl->allow($role->getName(), $resource, $actions);
             };
 
