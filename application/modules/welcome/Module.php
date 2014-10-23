@@ -3,7 +3,6 @@ namespace Modules\Welcome;
 
 use Modules\Welcome\Plugins\Security;
 use Project\Phalcon\Mvc\Module as ModuleBase;
-
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Loader;
 use Phalcon\Mvc\Dispatcher;
@@ -39,7 +38,6 @@ class Module extends ModuleBase
      */
     public function registerServices($di)
     {
-        parent::registerServices($di);
-        parent::registerSecurityEvent($di, new Security($di));
+        parent::registerSecurityServices($di, new Security($di));
     }
 }

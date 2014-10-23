@@ -62,18 +62,22 @@ class Module
      */
     public function registerServices($di)
     {
-        /**
-         * @return Dispatcher
-         */
-        $di->set(
-            'dispatcher',
-            function () use ($di) {
-                $dispatcher = new Dispatcher();
-                $dispatcher->setDefaultNamespace($this->default_namespace);
-                return $dispatcher;
-            }
-        );
+        $this->registerDispatcher($di);
+        $this->registerViewService($di);
+    }
 
+    /**
+     * @param \Phalcon\DI\FactoryDefault $di
+     * @param                            $security
+     */
+    public function registerSecurityServices($di, $security)
+    {
+        $this->registerSecureDispatcher($di, $security);
+        $this->registerViewService($di);
+    }
+
+    protected function registerViewService($di)
+    {
         /**
          * Setting up the view component
          */
@@ -123,28 +127,63 @@ class Module
     }
 
     /**
-     * @param \Phalcon\DI\FactoryDefault $di
-     * @param                            $security
+     * Normally, the framework creates the Dispatcher automatically. In our case, we want to perform a verification
+     * before executing the required action, checking if the user has access to it or not. To achieve this,
+     * we have replaced the component by creating a function in the bootstrap
+     * @param \Phalcon\DI\FactoryDefault     $di
+     * @return Dispatcher
      */
-    public function registerSecurityEvent($di, $security)
+    public function registerDispatcher($di)
     {
         /**
          * @return Dispatcher
          */
         $di->set(
             'dispatcher',
-            function () use ($di, $security) {
-                //Obtain the standard eventsManager from the DI
-                $eventsManager = $di->getShared('eventsManager');
+            function () use ($di) {
+                $dispatcher = new Dispatcher();
+                $dispatcher->setDefaultNamespace($this->default_namespace);
+                return $dispatcher;
+            }
+        );
+    }
 
-                //Listen for events produced in the dispatcher using the Security plugin
-                $eventsManager->attach('dispatch', $security);
+    /**
+     * @param \Phalcon\DI\FactoryDefault     $di
+     * @param null                           $security
+     */
+    public function registerSecureDispatcher($di, $security)
+    {
+        /**
+         * Normally, the framework creates the Dispatcher automatically. In our case, we want to perform a verification
+         * before executing the required action, checking if the user has access to it or not. To achieve this,
+         * we have replaced the component by creating a function in the bootstrap
+         *
+         * @return Dispatcher
+         */
+        $di->set(
+            'dispatcher',
+            function () use ($di, $security) {
 
                 $dispatcher = new Dispatcher();
                 $dispatcher->setDefaultNamespace($this->default_namespace);
 
-                //Bind the EventsManager to the Dispatcher
-                $dispatcher->setEventsManager($eventsManager);
+                if ($security != null) {
+                    /**
+                     * Obtain the standard eventsManager from the DI
+                     */
+                    $eventsManager = $di->getShared('eventsManager');
+
+                    /**
+                     * Listen for events produced in the dispatcher using the Security plugin
+                     */
+                    $eventsManager->attach('dispatch', $security);
+
+                    /**
+                     * Bind the EventsManager to the Dispatcher
+                     */
+                    $dispatcher->setEventsManager($eventsManager);
+                }
 
                 return $dispatcher;
             }
