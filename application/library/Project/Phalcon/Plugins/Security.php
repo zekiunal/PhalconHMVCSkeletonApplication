@@ -39,8 +39,6 @@ class Security extends Plugin
         $this->_dependencyInjector = $di;
     }
 
-
-
     /**
      * @return AdapterInterface
      */
