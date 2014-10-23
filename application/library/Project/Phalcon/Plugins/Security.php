@@ -32,7 +32,7 @@ class Security extends Plugin
      * 'controller_name' => array('action_name'),
      * @var array
      */
-    protected $public_resources = array('index'=> array('index'));
+    protected $public_resources = array('index' => array('index'));
 
     /**
      * Register roles
@@ -43,7 +43,7 @@ class Security extends Plugin
     {
         $this->_dependencyInjector = $di;
         $this->roles = array(
-            'users' => new Role('Users'),
+            'users'  => new Role('Users'),
             'guests' => new Role('Guests')
         );
     }
@@ -66,7 +66,7 @@ class Security extends Plugin
             }
             //Grant access to private area to role Users
             foreach ($this->private_resources as $resource => $actions) {
-                foreach ($actions as $action){
+                foreach ($actions as $action) {
                     $acl->allow('Users', $resource, $action);
                 }
             }
@@ -102,7 +102,7 @@ class Security extends Plugin
         $allowed = $this->getAcl()->isAllowed($role, $dispatcher->getControllerName(), $dispatcher->getActionName());
 
         if ($allowed != Acl::ALLOW) {
-            $this->flash->error("You don't have access to ".$dispatcher->getActionName()." on ".$dispatcher->getModuleName()." module");
+            $this->flash->error("You don't have access to " . $dispatcher->getActionName() . " on " . $dispatcher->getModuleName() . " module");
 
             /*
             $dispatcher->forward(

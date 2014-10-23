@@ -4,7 +4,7 @@
  * @description
  *
  * @package
- * @name        routers/welcome.php
+ * @name        routers /welcome.php
  * @version     0.1
  */
 $router->add(

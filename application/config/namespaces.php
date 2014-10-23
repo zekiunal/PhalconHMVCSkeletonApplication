@@ -6,7 +6,7 @@ use \Phalcon\Loader;
  * @description
  *
  * @package
- * @name        namespaces.php
+ * @name        namespaces .php
  * @version     0.1
  */
 $loader = new Loader();
@@ -18,7 +18,7 @@ $loader->registerNamespaces(
 );
 $loader->registerDirs(
     array(
-       '../application/plugins',
+        '../application/plugins',
     )
 );
 

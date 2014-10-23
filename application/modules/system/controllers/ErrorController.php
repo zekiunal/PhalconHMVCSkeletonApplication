@@ -20,11 +20,11 @@ class ErrorController extends Controller
 
     public function notFoundAction()
     {
-        $this->response->setStatusCode(404,'The server has not found anything matching the Request-URI.');
+        $this->response->setStatusCode(404, 'The server has not found anything matching the Request-URI.');
     }
 
     public function unauthorizedAction()
     {
-        $this->response->setStatusCode(401,'The request requires user authentication.');
+        $this->response->setStatusCode(401, 'The request requires user authentication.');
     }
 }

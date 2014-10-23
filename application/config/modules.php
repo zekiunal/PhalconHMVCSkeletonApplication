@@ -4,16 +4,16 @@
  * @description
  *
  * @package
- * @name        modules.php
+ * @name        modules .php
  * @version     0.1
  */
 return array(
     'welcome' => array(
         'className' => 'Modules\Welcome\Module',
-        'path' => '../application/modules/welcome/Module.php'
+        'path'      => '../application/modules/welcome/Module.php'
     ),
-    'system' => array(
+    'system'  => array(
         'className' => 'Modules\System\Module',
-        'path' => '../application/modules/system/Module.php'
+        'path'      => '../application/modules/system/Module.php'
     ),
 );

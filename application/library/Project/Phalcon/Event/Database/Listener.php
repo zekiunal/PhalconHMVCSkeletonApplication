@@ -31,7 +31,7 @@ class Listener
     }
 
     /**
-     * @param $event
+     * @param       $event
      * @param Mysql $connection
      */
     public function afterConnect($event, Mysql $connection)
@@ -40,7 +40,7 @@ class Listener
     }
 
     /**
-     * @param $event
+     * @param       $event
      * @param Mysql $connection
      */
     public function beforeQuery($event, Mysql $connection)
@@ -49,7 +49,7 @@ class Listener
     }
 
     /**
-     * @param $event
+     * @param       $event
      * @param Mysql $connection
      */
     public function afterQuery($event, Mysql $connection)
