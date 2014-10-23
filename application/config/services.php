@@ -1,9 +1,9 @@
 <?php
-use \Phalcon\Mvc\Url;
-use \Phalcon\Flash\Direct;
-use \Phalcon\DI\FactoryDefault;
-use \Phalcon\Config\Adapter\Ini;
-use \Phalcon\Session\Adapter\Files;
+use Phalcon\Mvc\Url;
+use Phalcon\Flash\Direct;
+use Phalcon\DI\FactoryDefault;
+use Phalcon\Config\Adapter\Ini;
+use Phalcon\Session\Adapter\Files;
 
 /**
  * The FactoryDefault Dependency Injector automatically register
@@ -16,20 +16,24 @@ $di = new FactoryDefault();
  */
 $di->set(
     'url',
-    function() {
+    function () {
         $url = new Url();
         $url->setBaseUri('/');
         return $url;
     }
 );
 
-$di->set('config', function() {
-    return new Ini("../application/config/ini/".APPLICATION_ENV.".ini");
-});
 
-$di->set(
+$di->setShared(
+    'config',
+    function () {
+        return new Ini("../application/config/ini/" . APPLICATION_ENV . ".ini");
+    }
+);
+
+$di->setShared(
     'session',
-    function() {
+    function () {
         $session = new Files();
         $session->start();
         return $session;
@@ -37,15 +41,20 @@ $di->set(
 );
 
 //Register the flash service with custom CSS classes
-$di->set('flash', function(){
-    $flash = new Direct(array(
-        'error' => 'alert alert-warning',
-        'success' => 'alert alert-success',
-        'notice' => 'alert alert-info',
-        'warning' => 'alert alert-danger'
-    ));
-    return $flash;
-});
+$di->set(
+    'flash',
+    function () {
+        $flash = new Direct(
+            array(
+                'error'   => 'alert alert-warning',
+                'success' => 'alert alert-success',
+                'notice'  => 'alert alert-info',
+                'warning' => 'alert alert-danger'
+            )
+        );
+        return $flash;
+    }
+);
 
 /*******************************************************/
 
