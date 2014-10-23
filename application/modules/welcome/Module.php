@@ -26,9 +26,6 @@ class Module extends ModuleBase
             'Modules\Welcome\Controllers' => $this->path . '/controllers/',
             'Modules\Welcome\Models'      => $this->path . '/models/',
             'Modules\Welcome\Plugins'     => $this->path . '/plugins/',
-            'Modules\Users\Models'        => '../application/modules/users/models/',
-            'Modules\Products\Models'     => '../application/modules/products/models/',
-            'Modules\Categories\Models'   => '../application/modules/categories/models/'
         );
         $this->default_namespace = 'Modules\Welcome\Controllers';
     }
