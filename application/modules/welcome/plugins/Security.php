@@ -3,6 +3,14 @@ namespace Modules\Welcome\Plugins;
 
 use Project\Phalcon\Plugins\Security as SecurityBase;
 
+/**
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package     Modules\Welcome\Plugins
+ * @name        Security
+ * @version     0.1
+ */
 class Security extends SecurityBase
 {
     /**

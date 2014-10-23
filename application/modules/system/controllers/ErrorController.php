@@ -4,10 +4,12 @@ namespace Modules\System\Controllers;
 use \Project\Phalcon\Mvc\Controller;
 
 /**
- * @package Modules\System\Controllers
- * @author Zeki UNAL <zekiunal@gmail.com>
- * @created 2014-03-24 03:12
- * @name ErrorController
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package     Modules\System\Controllers
+ * @name        ErrorController
+ * @version     0.1
  */
 class ErrorController extends Controller
 {

@@ -1,6 +1,11 @@
 <?php
 /**
- * @author Zeki UNAL <zekiunal@gmail.com>
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package
+ * @name        modules.php
+ * @version     0.1
  */
 return array(
     'welcome' => array(

@@ -10,10 +10,12 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
 
 /**
- * @package Modules\Welcome
- * @author  Zeki UNAL <zekiunal@gmail.com>
- * @created 2014-03-24 03:08
- * @name Module
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package     Modules\Welcome
+ * @name        Module
+ * @version     0.1
  */
 class Module extends ModuleBase
 {

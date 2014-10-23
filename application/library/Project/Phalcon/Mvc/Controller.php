@@ -3,12 +3,14 @@ namespace Project\Phalcon\Mvc;
 
 use \Phalcon\Mvc\Controller as PhalconController;
 
+
 /**
- * @property mixed config
- * @package Mvc
- * @author Zeki UNAL <zekiunal@gmail.com>
- * @created 2014-03-24 03:12
- * @name Controller
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package     Project\Phalcon\Mvc
+ * @name        Controller
+ * @version     0.1
  */
 class Controller extends PhalconController
 {

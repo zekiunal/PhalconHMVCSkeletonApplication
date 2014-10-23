@@ -10,6 +10,14 @@ use \Phalcon\Acl\Resource;
 use \Phalcon\Acl\Role;
 use \Phalcon\Acl;
 
+/**
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package     Project\Phalcon\Plugins
+ * @name        Security
+ * @version     0.1
+ */
 class Security extends Plugin
 {
     /**

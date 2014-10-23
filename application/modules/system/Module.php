@@ -4,10 +4,12 @@ namespace Modules\System;
 use Project\Phalcon\Mvc\Module as ModuleBase;
 
 /**
- * @package Modules\System
- * @author  Zeki UNAL <zekiunal@gmail.com>
- * @created 2014-03-24 03:08
- * @name Module
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package     MModules\System
+ * @name        Module
+ * @version     0.1
  */
 class Module extends ModuleBase
 {

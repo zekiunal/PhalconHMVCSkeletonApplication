@@ -4,10 +4,12 @@ use \Phalcon\Mvc\Dispatcher;
 use \Phalcon\Acl;
 
 /**
- * @package Plugins
- * @author Zeki UNAL <zekiunal@gmail.com>
- * @created 2014-03-24 03:12
- * @name Security
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package
+ * @name        Security
+ * @version     0.1
  */
 class Security extends Plugin
 {

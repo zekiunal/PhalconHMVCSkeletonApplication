@@ -4,10 +4,12 @@ namespace Modules\Welcome\Controllers;
 use \Project\Phalcon\Mvc\Controller;
 
 /**
- * @package Modules\Welcome\Controllers
- * @author Zeki UNAL <zekiunal@gmail.com>
- * @created 2014-03-24 03:12
- * @name IndexController
+ * @author      Zeki Unal <zekiunal@gmail.com>
+ * @description
+ *
+ * @package     Modules\Welcome\Controllers
+ * @name        IndexController
+ * @version     0.1
  */
 class IndexController extends Controller
 {
