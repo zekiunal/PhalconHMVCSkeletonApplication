@@ -130,6 +130,7 @@ class Module
      * Normally, the framework creates the Dispatcher automatically. In our case, we want to perform a verification
      * before executing the required action, checking if the user has access to it or not. To achieve this,
      * we have replaced the component by creating a function in the bootstrap
+     *
      * @param \Phalcon\DI\FactoryDefault     $di
      * @return Dispatcher
      */
@@ -155,10 +156,6 @@ class Module
     public function registerSecureDispatcher($di, $security)
     {
         /**
-         * Normally, the framework creates the Dispatcher automatically. In our case, we want to perform a verification
-         * before executing the required action, checking if the user has access to it or not. To achieve this,
-         * we have replaced the component by creating a function in the bootstrap
-         *
          * @return Dispatcher
          */
         $di->set(
