@@ -103,7 +103,6 @@ class Module
                                 'partials_loader' => $partial_loader
                             );
                         } else {
-                            echo "burda";
                             $options = array(
                                 'cache'            => $config->path,
                                 'cache_file_mode'  => $config->mode,
