@@ -50,16 +50,16 @@ class Security extends Plugin
         $this->persistent->destroy();
 
         if (!isset($this->persistent->acl)) {
+
             $acl_adaptor = new Memory();
             $acl_adaptor->setDefaultAction(Acl::DENY);
 
             $acl_helper = new Helper($acl_adaptor, $this->private_resources, $this->public_resources);
-            $acl_helper->initialize();
 
             /**
              * The acl is stored in session, APC would be useful here too
              */
-            $this->persistent->acl = $acl_helper->getAcl();
+            $this->persistent->acl = $acl_helper->initialize()->getAcl();
         }
 
         return $this->persistent->acl;

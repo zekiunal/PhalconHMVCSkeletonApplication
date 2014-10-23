@@ -52,6 +52,9 @@ class Helper
         );
     }
 
+    /**
+     * @return Helper
+     */
     public function initialize()
     {
         $this->registerRoles();
@@ -59,6 +62,8 @@ class Helper
         $this->grandAccessForPrivateResourceToUserRole();
         $this->registerPublicResources();
         $this->grandAccessForPublicResourceToAllUsers();
+
+        return $this;
     }
 
     /**
@@ -118,9 +123,6 @@ class Helper
             };
             array_walk($this->public_resources, $allow);
         };
-
         array_map($grant, $this->roles);
     }
-
-
 }
