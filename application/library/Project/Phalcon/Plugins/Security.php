@@ -1,11 +1,11 @@
 <?php
 namespace Project\Phalcon\Plugins;
 
-use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\AdapterInterface;
-use Phalcon\Http\Response;
+use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Mvc\User\Plugin;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\Http\Response;
 use Phalcon\Events\Event;
 use Phalcon\Acl\Resource;
 use Phalcon\Acl\Role;
@@ -58,11 +58,7 @@ class Security extends Plugin
             'guests' => new Role('Guests')
         );
 
-        $add_role = function ($role) use ($acl) {
-            $acl->addRole($role);
-        };
-
-        array_map($add_role, $this->roles);
+        array_map(array($acl, 'addRole'), $this->roles);
     }
 
     /**
@@ -85,10 +81,8 @@ class Security extends Plugin
         $add_resource = function ($actions, $resource) use ($acl) {
             $acl->addResource(new Resource($resource), $actions);
         };
-        array_walk(
-            $this->public_resources,
-            $add_resource
-        );
+
+        array_walk($this->public_resources, $add_resource);
     }
 
     /**
@@ -102,16 +96,10 @@ class Security extends Plugin
             $allow = function ($action) use ($acl, $resource) {
                 $acl->allow('Users', $resource, $action);
             };
-            array_map(
-                $allow,
-                $actions
-            );
+            array_map($allow, $actions);
         };
 
-        array_walk(
-            $this->private_resources,
-            $grant
-        );
+        array_walk($this->private_resources, $grant);
     }
 
     /**
@@ -125,19 +113,15 @@ class Security extends Plugin
             $allow = function ($actions, $resource) use ($acl, $role) {
                 $acl->allow($role->getName(), $resource, $actions);
             };
-
-            array_walk(
-                $this->public_resources,
-                $allow
-            );
+            array_walk($this->public_resources, $allow);
         };
 
-        array_map(
-            $grant,
-            $this->roles
-        );
+        array_map($grant, $this->roles);
     }
 
+    /**
+     * @return AdapterInterface
+     */
     public function getAcl()
     {
         /**
@@ -157,7 +141,9 @@ class Security extends Plugin
             $this->registerPublicResources($acl);
             $this->grandAccessForPublicResourceToAllUsers($acl);
 
-            //The acl is stored in session, APC would be useful here too
+            /**
+             * The acl is stored in session, APC would be useful here too
+             */
             $this->persistent->acl = $acl;
         }
 
@@ -165,15 +151,23 @@ class Security extends Plugin
     }
 
     /**
+     * @return string
+     */
+    protected function getActiveRole()
+    {
+        $role = 'Guests';
+        if ($this->session->get('auth')) {
+            return 'Users';
+        }
+        return $role;
+    }
+
+    /**
      * This action is executed before execute any action in the application
      */
     public function beforeDispatch(Event $event, Dispatcher $dispatcher)
     {
-        if (!$this->session->get('auth')) {
-            $role = 'Guests';
-        } else {
-            $role = 'Users';
-        }
+        $role = $this->getActiveRole();
 
         $allowed = $this->getAcl()->isAllowed($role, $dispatcher->getControllerName(), $dispatcher->getActionName());
 
@@ -182,7 +176,6 @@ class Security extends Plugin
                 "You don't have access to " . $dispatcher->getActionName() .
                 " on " . $dispatcher->getModuleName() . " module"
             );
-
             /*
             $dispatcher->forward(
                 array(
