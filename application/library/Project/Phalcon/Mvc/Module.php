@@ -166,6 +166,7 @@ class Module
                 $dispatcher->setDefaultNamespace($this->default_namespace);
 
                 if ($security != null) {
+
                     /**
                      * Obtain the standard eventsManager from the DI
                      */
