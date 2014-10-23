@@ -7,9 +7,8 @@ use Phalcon\Mvc\User\Plugin;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Http\Response;
 use Phalcon\Events\Event;
-use Phalcon\Acl\Resource;
-use Phalcon\Acl\Role;
 use Phalcon\Acl;
+use Project\Phalcon\Plugins\Security\Acl\Helper;
 
 /**
  * @author      Zeki Unal <zekiunal@gmail.com>
@@ -35,89 +34,12 @@ class Security extends Plugin
      */
     protected $public_resources = array('index' => array('index'));
 
-    /**
-     * Register roles
-     */
-    protected $roles;
-
     public function __construct($di)
     {
         $this->_dependencyInjector = $di;
     }
 
-    /**
-     * @param AdapterInterface $acl
-     */
-    protected function registerRoles(AdapterInterface $acl)
-    {
-        /**
-         * Register roles
-         */
-        $this->roles = array(
-            'users'  => new Role('Users'),
-            'guests' => new Role('Guests')
-        );
 
-        array_map(array($acl, 'addRole'), $this->roles);
-    }
-
-    /**
-     * @param AdapterInterface $acl
-     */
-    protected function registerPrivateResources(AdapterInterface $acl)
-    {
-        $add_resource = function ($actions, $resource) use ($acl) {
-            $acl->addResource(new Resource($resource), $actions);
-        };
-
-        array_walk($this->private_resources, $add_resource);
-    }
-
-    /**
-     * @param AdapterInterface $acl
-     */
-    protected function registerPublicResources(AdapterInterface $acl)
-    {
-        $add_resource = function ($actions, $resource) use ($acl) {
-            $acl->addResource(new Resource($resource), $actions);
-        };
-
-        array_walk($this->public_resources, $add_resource);
-    }
-
-    /**
-     * Grant access to private area to role Users
-     *
-     * @param AdapterInterface $acl
-     */
-    protected function grandAccessForPrivateResourceToUserRole(AdapterInterface $acl)
-    {
-        $grant = function ($actions, $resource) use ($acl) {
-            $allow = function ($action) use ($acl, $resource) {
-                $acl->allow('Users', $resource, $action);
-            };
-            array_map($allow, $actions);
-        };
-
-        array_walk($this->private_resources, $grant);
-    }
-
-    /**
-     * Grant access to public areas to both users and guests
-     *
-     * @param AdapterInterface $acl
-     */
-    protected function grandAccessForPublicResourceToAllUsers(AdapterInterface $acl)
-    {
-        $grant = function (Role $role) use ($acl, $this) {
-            $allow = function ($actions, $resource) use ($acl, $role) {
-                $acl->allow($role->getName(), $resource, $actions);
-            };
-            array_walk($this->public_resources, $allow);
-        };
-
-        array_map($grant, $this->roles);
-    }
 
     /**
      * @return AdapterInterface
@@ -130,21 +52,16 @@ class Security extends Plugin
         $this->persistent->destroy();
 
         if (!isset($this->persistent->acl)) {
-            $acl = new Memory();
-            $acl->setDefaultAction(Acl::DENY);
+            $acl_adaptor = new Memory();
+            $acl_adaptor->setDefaultAction(Acl::DENY);
 
-            $this->registerRoles($acl);
-
-            $this->registerPrivateResources($acl);
-            $this->grandAccessForPrivateResourceToUserRole($acl);
-
-            $this->registerPublicResources($acl);
-            $this->grandAccessForPublicResourceToAllUsers($acl);
+            $acl_helper = new Helper($acl_adaptor, $this->private_resources, $this->public_resources);
+            $acl_helper->initialize();
 
             /**
              * The acl is stored in session, APC would be useful here too
              */
-            $this->persistent->acl = $acl;
+            $this->persistent->acl = $acl_helper->getAcl();
         }
 
         return $this->persistent->acl;
