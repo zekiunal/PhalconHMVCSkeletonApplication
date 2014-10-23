@@ -102,7 +102,10 @@ class Security extends Plugin
         $allowed = $this->getAcl()->isAllowed($role, $dispatcher->getControllerName(), $dispatcher->getActionName());
 
         if ($allowed != Acl::ALLOW) {
-            $this->flash->error("You don't have access to " . $dispatcher->getActionName() . " on " . $dispatcher->getModuleName() . " module");
+            $this->flash->error(
+                "You don't have access to " . $dispatcher->getActionName() .
+                " on " . $dispatcher->getModuleName() . " module"
+            );
 
             /*
             $dispatcher->forward(
