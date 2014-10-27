@@ -1,4 +1,4 @@
-Phalcon HMVC Skeleton Application with Mustache Template Engine
+Phalcon HMVC Skeleton Application with Mustache
 =======================
 
 Introduction
