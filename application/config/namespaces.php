@@ -12,7 +12,7 @@ use \Phalcon\Loader;
 $loader = new Loader();
 $loader->registerNamespaces(
     array(
-        'Project' => '../library/Project',
+        'Project' => '../application/library/Project',
         'Phalcon' => '../vendor/Phalcon',
     )
 );
