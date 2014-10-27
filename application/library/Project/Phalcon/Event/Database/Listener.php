@@ -17,7 +17,7 @@ class Listener
     /**
      * @var Logger
      */
-    protected $_logger;
+    protected $logger;
 
     /**
      * class constructor
@@ -27,7 +27,7 @@ class Listener
         if (!file_exists("db.log")) {
             @touch("db.log");
         }
-        $this->_logger = new Logger("db.log");
+        $this->logger = new Logger("db.log");
     }
 
     /**
@@ -45,7 +45,7 @@ class Listener
      */
     public function beforeQuery($event, Mysql $connection)
     {
-        $this->_logger->log($connection->getSQLStatement());
+        $this->logger->log($connection->getSQLStatement());
     }
 
     /**
@@ -54,6 +54,6 @@ class Listener
      */
     public function afterQuery($event, Mysql $connection)
     {
-        $this->_logger->log($connection->getSQLStatement(), \Phalcon\Logger::ERROR);
+        $this->logger->log($connection->getSQLStatement(), \Phalcon\Logger::ERROR);
     }
 }
