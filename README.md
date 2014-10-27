@@ -9,10 +9,9 @@ systems. This application is meant to be used as a starting place for those
 looking to get their feet wet with Phalcon PHP Framework.
 
 Phalcon Framework
-=================
+------------
 
 [Phalcon](https://github.com/phalcon/cphalcon) is a web framework implemented as a C extension offering high performance and lower resource consumption.
-
 
 
 Mustache
