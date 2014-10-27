@@ -37,6 +37,11 @@ class Helper
      */
     protected $roles;
 
+    /**
+     * @param AdapterInterface $acl_adaptor
+     * @param array            $public
+     * @param array            $private
+     */
     public function __construct(AdapterInterface $acl_adaptor, array $public, array $private)
     {
         $this->adaptor = $acl_adaptor;
