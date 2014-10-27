@@ -81,7 +81,7 @@ class Helper
 
     public function registerPrivateResources()
     {
-        $add_resource = function ($actions, $resource) use ($this) {
+        $add_resource = function ($actions, $resource) {
             $this->adaptor->addResource(new Resource($resource), $actions);
         };
 
@@ -90,10 +90,9 @@ class Helper
 
     public function registerPublicResources()
     {
-        $add_resource = function ($actions, $resource) use ($this) {
+        $add_resource = function ($actions, $resource) {
             $this->adaptor->addResource(new Resource($resource), $actions);
         };
-
         array_walk($this->public_resources, $add_resource);
     }
 
@@ -102,8 +101,8 @@ class Helper
      */
     public function grandAccessForPrivateResourceToUserRole()
     {
-        $grant = function ($actions, $resource) use ($this) {
-            $allow = function ($action) use ($this, $resource) {
+        $grant = function ($actions, $resource) {
+            $allow = function ($action) use ($resource) {
                 $this->adaptor->allow('Users', $resource, $action);
             };
             array_map($allow, $actions);
@@ -117,8 +116,8 @@ class Helper
      */
     public function grandAccessForPublicResourceToAllUsers()
     {
-        $grant = function (Role $role) use ($this) {
-            $allow = function ($actions, $resource) use ($this, $role) {
+        $grant = function (Role $role) {
+            $allow = function ($actions, $resource) use ($role) {
                 $this->adaptor->allow($role->getName(), $resource, $actions);
             };
             array_walk($this->public_resources, $allow);
