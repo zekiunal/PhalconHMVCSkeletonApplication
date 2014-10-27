@@ -1,4 +1,4 @@
-Phalcon HMVC Skeleton Application with Mustache
+Phalcon HMVC Skeleton with Mustache
 =======================
 
 Introduction
