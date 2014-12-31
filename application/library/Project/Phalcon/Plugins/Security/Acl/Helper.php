@@ -44,9 +44,9 @@ class Helper
      */
     public function __construct(AdapterInterface $acl_adaptor, array $public, array $private)
     {
-        $this->adaptor = $acl_adaptor;
-        $this->private_resources = $private;
-        $this->public_resources = $public;
+        $this->adaptor              = $acl_adaptor;
+        $this->private_resources    = $private;
+        $this->public_resources     = $public;
 
         /**
          * Register roles
@@ -67,7 +67,6 @@ class Helper
         $this->grandAccessForPrivateResourceToUserRole();
         $this->registerPublicResources();
         $this->grandAccessForPublicResourceToAllUsers();
-
         return $this;
     }
 
