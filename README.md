@@ -19,7 +19,3 @@ Mustache
 [Mustache](https://github.com/bobthecow/mustache.php) is a logic-less template engine available
 for many platforms and languages. A PHP implementation is available in
 [this Github repository](https://github.com/bobthecow/mustache.php).
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zekiunal/phalconhmvcskeletonapplication/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
