@@ -216,3 +216,5 @@ pip-log.txt
 
 ## Directory-based project format:
 .idea/
+
+/vendor/

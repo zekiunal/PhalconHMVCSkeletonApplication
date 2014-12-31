@@ -9,11 +9,14 @@ use \Phalcon\Loader;
  * @name        namespaces .php
  * @version     0.1
  */
+
+/** Composer Autoload */
+require_once '../vendor/autoload.php';
+
 $loader = new Loader();
 $loader->registerNamespaces(
     array(
-        'Project' => '../application/library/Project',
-        'Phalcon' => '../vendor/Phalcon',
+        'Project' => '../application/library/Project'
     )
 );
 $loader->registerDirs(

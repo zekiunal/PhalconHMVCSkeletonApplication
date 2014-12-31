@@ -1,0 +1,13 @@
+{
+    "name": "zekiunal/phalconskeletonapp",
+    "authors": [
+        {
+            "name": "Zeki Ünal",
+            "email": "zekiunal@gmail.com"
+        }
+    ],
+    "require": {
+        "phalcon/incubator": "dev-master",
+        "mustache/mustache": "dev-master"
+    }
+}
