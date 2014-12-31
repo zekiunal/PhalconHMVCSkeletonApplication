@@ -28,4 +28,9 @@ class IndexController extends Controller
     public function privateAction()
     {
     }
+
+    public function aboutAction()
+    {
+        echo "Hello About Us";
+    }
 }

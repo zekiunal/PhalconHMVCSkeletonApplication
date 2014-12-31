@@ -24,3 +24,13 @@ $router->add(
         'action'     => 'private'
     )
 );
+
+$router->add(
+    '/about',
+    array(
+        'module'     => 'welcome',
+        'controller' => 'index',
+        'action'     => 'about'
+    )
+);
+

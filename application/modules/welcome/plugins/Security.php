@@ -19,11 +19,15 @@ class Security extends SecurityBase
     public function __construct($di)
     {
         parent::__construct($di);
+
+
         $this->private_resources = array(
             'index' => array('private'),
         );
+
         $this->public_resources = array(
-            'index' => array('index')
+            'index' => array('index', 'about')
         );
+
     }
 }

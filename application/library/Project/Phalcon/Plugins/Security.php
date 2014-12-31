@@ -54,7 +54,7 @@ class Security extends Plugin
             $acl_adaptor = new Memory();
             $acl_adaptor->setDefaultAction(Acl::DENY);
 
-            $acl_helper = new Helper($acl_adaptor, $this->private_resources, $this->public_resources);
+            $acl_helper = new Helper($acl_adaptor, $this->public_resources, $this->private_resources);
 
             /**
              * The acl is stored in session, APC would be useful here too

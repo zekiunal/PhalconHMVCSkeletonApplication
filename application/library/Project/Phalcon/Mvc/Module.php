@@ -98,15 +98,11 @@ class Module
             $view->setLayoutsDir($this->layout_dir);
             $view->setTemplateAfter($this->template);
             $view->setVar('project-setting', $di->get('config')->project->toArray());
+
             // Set the engine
             $view->registerEngines(
                 array(
                     ".mustache" => function ($view, DI $di) {
-                        /**
-                         * Mustache loading
-                         */
-                        require_once "../vendor/Mustache/Autoloader.php";
-                        \Mustache_Autoloader::register();
 
                         $partial_url = '../public/layouts/' . $di->get('config')->project->layout . '/partials';
                         $partial_loader = new Mustache_Loader_FilesystemLoader($partial_url);
@@ -125,7 +121,6 @@ class Module
                                 'strict_callables' => $config->callables,
                             );
                         }
-
                         $mustache = new Mustache($view, $di, $options);
                         return $mustache;
                     },
