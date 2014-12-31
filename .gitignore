@@ -216,3 +216,4 @@ pip-log.txt
 
 ## Directory-based project format:
 .idea/
+atlassian-ide-plugin.xml
