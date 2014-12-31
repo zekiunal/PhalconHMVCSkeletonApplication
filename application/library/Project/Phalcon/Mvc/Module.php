@@ -121,7 +121,8 @@ class Module
                                 'strict_callables' => $config->callables,
                             );
                         }
-                        $mustache = new Mustache($view, $di, $options);
+
+                        $mustache = new \Project\Phalcon\Mvc\Mustache($view, $di, $options);
                         return $mustache;
                     },
                     '.phtml'    => 'Phalcon\Mvc\View\Engine\Php'
