@@ -7,7 +7,7 @@ use Phalcon\DI;
 use Phalcon\Loader;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
-use Phalcon\Mvc\View\Engine\Mustache;
+use Project\Phalcon\Mvc\Mustache;
 
 /**
  * @author      Zeki Unal <zekiunal@gmail.com>
@@ -122,7 +122,7 @@ class Module
                             );
                         }
 
-                        $mustache = new \Project\Phalcon\Mvc\Mustache($view, $di, $options);
+                        $mustache = new Mustache($view, $di, $options);
                         return $mustache;
                     },
                     '.phtml'    => 'Phalcon\Mvc\View\Engine\Php'
