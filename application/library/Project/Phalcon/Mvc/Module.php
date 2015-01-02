@@ -7,7 +7,7 @@ use Phalcon\DI;
 use Phalcon\Loader;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
-use Phalcon\Mvc\View\Engine\Mustache;
+use Project\Phalcon\Mvc\Mustache;
 
 /**
  * @author      Zeki Unal <zekiunal@gmail.com>
@@ -121,6 +121,7 @@ class Module
                                 'strict_callables' => $config->callables,
                             );
                         }
+
                         $mustache = new Mustache($view, $di, $options);
                         return $mustache;
                     },
