@@ -7,7 +7,7 @@
         }
     ],
     "require": {
-        "phalcon/incubator": "dev-master",
-        "mustache/mustache": "dev-master"
+        "phalcon/incubator": "2.0.*",
+        "mustache/mustache": "2.9.*"
     }
 }
