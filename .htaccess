@@ -4,10 +4,12 @@
 # public dizini altında ki php dosyalarının yorumlanmasını amaçlamaktadır.
 # Bu ayarlar projenin MVC çatısını oluşturan Phalcon Framework'ün resmi sitesinden alınmıştır.
 
-SetEnvIf Host "admin.domain.com" APPLICATION_ENV=production
-SetEnvIf Host "stage.admin.domain.com" APPLICATION_ENV=stage
-SetEnvIf Host "dev.admin.domain.com" APPLICATION_ENV=development
-SetEnvIf Host "test.admin.domain.com" APPLICATION_ENV=test
+<IfModule mod_setenvif.c>
+    SetEnvIf Host "www.domain.com" APPLICATION_ENV=production
+    SetEnvIf Host "stage.domain.com" APPLICATION_ENV=stage
+    SetEnvIf Host "dev.domain.com" APPLICATION_ENV=development
+    SetEnvIf Host "test.domain.com" APPLICATION_ENV=test
+</IfModule>
 
 <IfModule mod_rewrite.c>
     RewriteEngine on
