@@ -1,17 +1,21 @@
 <?php
-defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'stage'));
-try {
-    $configuration_path = dirname(dirname(__FILE__)).'/application/config/';
-    include $configuration_path."namespaces.php";
+require_once 'setup.php';
 
-    $di             = include $configuration_path.'services.php';
-    $modules        = include $configuration_path.'modules.php';
-    $di['router']   = include $configuration_path.'routers.php';
+use Phalcon\Mvc\Application;
+
+try {
+
+    $configuration_path = dirname(dirname(__FILE__)).'/application/config/';
+    require_once $configuration_path."namespaces.php";
+
+    $di             = require_once $configuration_path.'services.php';
+    $modules        = require_once $configuration_path.'modules.php';
+    $di['router']   = require_once $configuration_path.'routers.php';
 
     /**
      * Handle the request
      */
-    $application = new \Phalcon\Mvc\Application($di);
+    $application = new Application($di);
 
     /**
      * Register application modules
@@ -23,11 +27,14 @@ try {
      */
     echo $application->handle()->getContent();
 
-} catch(\Exception $e) {
+} catch (\Phalcon\Exception $e) {
+    echo get_class($e), ": ", $e->getMessage(), "\n";
+    echo " File=", $e->getFile(), "\n";
+    echo " Line=", $e->getLine(), "\n";
+    echo $e->getTraceAsString();
+} catch (\Exception $e) {
     echo get_class($e), ": ", $e->getMessage(), "\n";
     echo " File=", $e->getFile(), "\n";
     echo " Line=", $e->getLine(), "\n";
     echo $e->getTraceAsString();
 }
-
-echo "<!-- ".getenv('APPLICATION_ENV')." -->";
